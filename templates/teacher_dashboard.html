@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Teacher Portal: Submitted Assignments 👨‍🏫</h2>
+    <a href="{{ url_for('auth.logout') }}" class="btn btn-sm btn-outline-danger">Logout</a>
+</div>
+
+<hr>
+
+{% if assignments %}
+    <h3 class="mt-4">Graded Submissions</h3>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Student Name</th>
+                <th>Roll No.</th>
+                <th>Submitted On</th>
+                <th>AI Score</th>
+                <th>Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assignment, user in assignments %}
+            <tr>
+                <td>{{ assignment.title }}</td>
+                <td>{{ assignment.student_name }}</td>
+                <td>{{ assignment.roll_number }}</td>
+                <td>{{ assignment.upload_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    {% if assignment.is_graded %}
+                        <span class="badge bg-success fs-6">{{ assignment.grade_score | round(1) }}/10</span>
+                    {% else %}
+                        <span class="badge bg-warning">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if assignment.feedback %}
+                        <pre style="white-space: pre-wrap; font-size: 0.9em;">{{ assignment.feedback }}</pre>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="alert alert-info">No assignments have been graded yet.</p>
+{% endif %}
+
+{% endblock %}

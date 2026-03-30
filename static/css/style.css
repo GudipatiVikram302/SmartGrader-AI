@@ -1,0 +1,13 @@
+/* Basic custom styles for clarity */
+.container {
+    max-width: 900px;
+}
+pre {
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    /* Reset background and padding for clean display */
+    background: none;
+    padding: 0;
+}
+/* You can add more complex styling here if needed */
